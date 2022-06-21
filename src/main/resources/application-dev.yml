@@ -1,0 +1,18 @@
+server:
+  port: 8081
+
+logging:
+  file:
+    name: logs/studentapp-dev.log
+  pattern:
+    file: "%d %-5level [%thread] %logger:%msg%n"
+  level:
+    '[org.springframework.web]': INFO
+    '[org.hibernate]': INFO
+    '[com.tpe]': INFO
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: ['trace','auditevents','threaddump','configprops','health','env','metrics','logfile','loggers','beans']

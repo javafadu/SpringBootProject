@@ -11,6 +11,7 @@ import com.tpe.exception.ResourceNotFoundException;
 import com.tpe.repository.StudentRepository;
 @Service
 public class StudentServiceImpl implements StudentService {
+
     private StudentRepository studentRepository;
 
     //Field, Constructor, Setter
@@ -41,9 +42,9 @@ public class StudentServiceImpl implements StudentService {
     public void createStudent(Student student) {
         //studentRepository.create(student);
 
-        if(studentRepository.existsByEmail(student.getEmail())) {
-            throw new ConflictException("Email already exist!");
-        }
+       if(studentRepository.existsByEmail(student.getEmail())) {
+           throw new ConflictException("Email already exist!");
+       }
 
         studentRepository.save(student);
     }

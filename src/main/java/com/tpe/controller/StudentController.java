@@ -2,9 +2,12 @@ package com.tpe.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import com.tpe.dto.StudentDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,25 +22,33 @@ import com.tpe.service.StudentService;
 @RequestMapping("/students")
 public class StudentController {
 
-
-
+    // logger objesi olusturalim (org.slf4j.Logger)
+    Logger logger = LoggerFactory.getLogger(StudentController.class);
     @Autowired
     private StudentService studentService;
 
     @GetMapping("/welcome")
-    public String welcome() {
+    public String welcome(HttpServletRequest request) {
+        // web server a bir request geliyor,
+        logger.info("----------Welcome {}",request.getServletPath());
+
         return "Welcome to Student Controller";
     }
 
     // 1. Islem : Student Create
 
     @PostMapping
-    public ResponseEntity<Map<String,String>> createStudent(@Valid @RequestBody Student student){
+    public ResponseEntity<Map<String,String>> ogrenciBilgisiAlveKaydet(@Valid @RequestBody Student student){
         studentService.createStudent(student);
         Map<String,String> map=new HashMap<>();
         map.put("message", "Student created successfuly");
         map.put("status", "true");
         return new ResponseEntity<>(map,HttpStatus.CREATED);
+    }
+
+    @PostMapping("/kaydet")
+    public void ogrenciKaydet(@Valid @RequestBody Student student) {
+        studentService.createStudent(student);
     }
 
     // 2. Islem : Get all Students
