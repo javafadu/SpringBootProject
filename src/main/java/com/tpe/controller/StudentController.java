@@ -44,7 +44,7 @@ public class StudentController {
 
     @GetMapping
     public ResponseEntity<List<Student>> getAll(){
-        List<Student> students = studentService.tumOgrenciler();
+        List<Student> students = studentService.getAll();
         return ResponseEntity.ok(students);
     }
 

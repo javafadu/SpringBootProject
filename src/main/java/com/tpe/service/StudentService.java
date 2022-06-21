@@ -5,13 +5,12 @@ import com.tpe.dto.StudentDTO;
 import com.tpe.exception.ResourceNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
 public interface StudentService {
 
-    public List<Student> tumOgrenciler();
+    public List<Student> getAll();
     public List<Student> findStudents(String lastName);
 
     Student findStudent(Long id) throws ResourceNotFoundException;

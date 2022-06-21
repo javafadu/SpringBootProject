@@ -22,7 +22,7 @@ public class StudentServiceImpl implements StudentService {
 
 
     @Override
-    public List<Student> tumOgrenciler() {
+    public List<Student> getAll() {
         return studentRepository.findAll();
     }
 
