@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import com.tpe.domain.Student;
 import com.tpe.service.StudentService;
@@ -27,6 +28,7 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
+
     @GetMapping("/welcome")
     public String welcome(HttpServletRequest request) {
         // web server a bir request geliyor,
@@ -37,8 +39,10 @@ public class StudentController {
 
     // 1. Islem : Student Create
 
+
     @PostMapping
-    public ResponseEntity<Map<String,String>> ogrenciBilgisiAlveKaydet(@Valid @RequestBody Student student){
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Map<String,String>> createStudent(@Valid @RequestBody Student student){
         studentService.createStudent(student);
         Map<String,String> map=new HashMap<>();
         map.put("message", "Student created successfuly");
@@ -53,6 +57,7 @@ public class StudentController {
 
     // 2. Islem : Get all Students
 
+    @PreAuthorize("hasRole('STUDENT')")
     @GetMapping
     public ResponseEntity<List<Student>> getAll(){
         List<Student> students = studentService.getAll();
@@ -63,12 +68,14 @@ public class StudentController {
 
     // 3. Islem : ID ye gore Get Student by ID
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('STUDENT')")
     @GetMapping("/query")
     public ResponseEntity<Student> getStudent(@RequestParam("id") Long id){
         Student student= studentService.findStudent(id);
         return ResponseEntity.ok(student);
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('STUDENT')")
     @GetMapping("/{id}")
     public ResponseEntity<Student> getStudentWithPath(@PathVariable("id") Long id){
         Student student= studentService.findStudent(id);
@@ -77,7 +84,7 @@ public class StudentController {
 
 
     // 4. Islem : ID den delete student
-
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Map<String,String>> deleteStudent(@PathVariable("id") Long id){
         studentService.deleteStudent(id);
