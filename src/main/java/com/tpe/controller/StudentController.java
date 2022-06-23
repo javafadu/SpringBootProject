@@ -41,7 +41,7 @@ public class StudentController {
 
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('STUDENT')")
     public ResponseEntity<Map<String,String>> createStudent(@Valid @RequestBody Student student){
         studentService.createStudent(student);
         Map<String,String> map=new HashMap<>();
