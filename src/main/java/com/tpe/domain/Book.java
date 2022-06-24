@@ -1,45 +1,49 @@
 package com.tpe.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
-
-
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-
 @Entity
-
+@Setter
+@NoArgsConstructor
 public class Book {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
+	@JsonProperty("bookName")
+	private String name;
+	
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name="student_id")
+	private Student student;
+	
+	
+	public Long getId() {
+		return id;
+	}
 
-    @JsonProperty("bookName")
-    private String name;
+	public String getName() {
+		return name;
+	}
 
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name="student_id")
-    private Student student;
+	public Student getStudent() {
+		return student;
+	}
 
-
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Student getStudent() {
-        return student;
-    }
+	
+	
 }
