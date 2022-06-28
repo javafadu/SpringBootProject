@@ -41,8 +41,8 @@ public class StudentController {
 	
 	Logger logger=LoggerFactory.getLogger(StudentController.class);
 	
-	@Autowired
-	private StudentService studentService;
+		@Autowired
+		private StudentService studentService;
 	
 	
 
