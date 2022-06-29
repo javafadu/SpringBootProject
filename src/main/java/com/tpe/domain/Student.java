@@ -41,7 +41,10 @@ public class Student {
 	@Size(min=1,max=100, message="First Name '${validatedValue}' must be between {min} and {max} chars long")
 	@Column(length = 100, nullable = false)
 	private String firstName;
-	
+
+	@NotNull(message="Last Name can not be null")
+	@NotBlank(message="Last Name can not be white space")
+	@Size(min=1,max=100, message="Last Name '${validatedValue}' must be between {min} and {max} chars long")
 	@Column(length = 100, nullable = false)
 	private String lastName;
 	
